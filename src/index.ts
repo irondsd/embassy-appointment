@@ -13,8 +13,10 @@ const next_btn_id = '#ctl00_MainContent_ButtonA'
 const next_btn_id_b = '#ctl00_MainContent_ButtonB'
 const table_list_id = '#ctl00_MainContent_RadioButtonList1'
 const submit_btn_id = '#ctl00_MainContent_Button1'
-const no_slots_id =
-  'p:text("Извините, но в настоящий момент на интересующее Вас консульское действие в системе предварительной записи нет свободного времени.")'
+const panel = '#center-panel'
+
+const NO_SLOTS_TEXT =
+  'Извините, но в настоящий момент на интересующее Вас консульское действие в системе предварительной записи нет свободного времени'
 
 const main = async () => {
   // Launch a Chromium browser instance
@@ -35,8 +37,13 @@ const main = async () => {
   await page.locator(input_id).type(captchaResult)
   await page.locator(next_btn_id).click()
   await page.locator(next_btn_id_b).click()
-  const no_slots = await page.$(no_slots_id)
-  if (!no_slots) {
+
+  await page.waitForLoadState('networkidle')
+
+  const content = await page.$(panel)
+  const contentText = await content.textContent()
+
+  if (contentText.includes(NO_SLOTS_TEXT)) {
     console.log('sorry, no slots available')
     await page.screenshot({ path: `./screenshots/${new Date().toISOString()}.png`, fullPage: true })
     await browser.close()
