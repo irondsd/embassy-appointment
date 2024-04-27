@@ -1,7 +1,7 @@
 import { chromium } from 'playwright'
 import { recognizeCaptcha } from './ocr'
 import { upload } from './uploadImg'
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 
 dotenv.config()
 
