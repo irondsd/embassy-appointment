@@ -8,20 +8,19 @@
 
 1. Зарегистрироваться на сайте \*.kdmid.ru для получения опредедлённой услуги, и получите письмо с ссылкой для выбора даты и времени записи. Где \* - это поддомен с консульством. Например armenia.kdmid.ru, argentina.kdmid.ru, и так далее.
 
-2. Создать файл `.env` и добавьте в него следующие переменные окружения:
+2. Зарегистрироваться на Rapid API для распознавания капчи. [https://rapidapi.com/dickyagustin/api/image-captcha-solver](https://rapidapi.com/dickyagustin/api/image-captcha-solver), дальше подписаться на API, получить API ключ. Опробовать можно с бесплатным планом, но бесплатного плана хватит только на 30 попыток. Лучше взять Pro.
+
+3. Создать файл `.env` и добавьте в него следующие переменные окружения:
 
 ```
 URL=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-APILAYER_API_KEY=
+RAPIDAPI_API_KEY=
 ```
 
 Где:
 
 - `URL` - ссылка из письма с выбором даты и времени записи.
-- `CLOUDINARY_API_KEY` и `CLOUDINARY_API_SECRET` - ключи от сервиса Cloudinary для загрузки скриншотов капчи.
-- `APILAYER_API_KEY` - API-ключ от Apilayer для распознавания текста на капче.
+- `RAPIDAPI_API_KEY` - API-ключ от Rapid API.
 
 ### Установка зависимостей
 

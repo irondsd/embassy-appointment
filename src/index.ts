@@ -1,6 +1,5 @@
 import { chromium } from 'playwright'
-import { recognizeCaptcha } from './ocr'
-import { upload } from './uploadImg'
+import { solveCaptcha } from './solveCaptcha'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -14,13 +13,14 @@ const next_btn_id_b = '#ctl00_MainContent_ButtonB'
 const table_list_id = '#ctl00_MainContent_RadioButtonList1'
 const submit_btn_id = '#ctl00_MainContent_Button1'
 const panel = '#center-panel'
+// const errorMessage = 'ctl00_MainContent_lblCodeErr'
 
 const NO_SLOTS_TEXT =
   'Извините, но в настоящий момент на интересующее Вас консульское действие в системе предварительной записи нет свободного времени'
 
 const main = async () => {
   // Launch a Chromium browser instance
-  const browser = await chromium.launch({ headless: false })
+  const browser = await chromium.launch()
   // Create a new browser context
   const context = await browser.newContext()
   // Create a new page in the browser context
@@ -28,11 +28,14 @@ const main = async () => {
   // Navigate to a website
   await page.goto(URL)
   const img = await page.$(img_id)
-  //   const src = await img.getAttribute('src')
+
+  // take catcha screenshot
   const captchaImageBuffer = await img.screenshot()
-  const uploadedUrl = await upload(captchaImageBuffer)
-  console.log(`img uploaded successfully: ${uploadedUrl}`)
-  const captchaResult = await recognizeCaptcha(uploadedUrl)
+
+  // resolve catcha
+  const base64Image = captchaImageBuffer.toString('base64')
+  const captchaResult = await solveCaptcha(base64Image, page)
+
   console.log(`capcha solved: ${captchaResult}`)
   await page.locator(input_id).type(captchaResult)
   await page.locator(next_btn_id).click()
