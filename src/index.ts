@@ -36,7 +36,7 @@ const main = async () => {
   const base64Image = captchaImageBuffer.toString('base64')
   const captchaResult = await solveCaptcha(base64Image, page)
 
-  console.log(`capcha solved: ${captchaResult}`)
+  // console.log(`capcha solved: ${captchaResult}`)
   await page.locator(input_id).type(captchaResult)
   await page.locator(next_btn_id).click()
   await page.locator(next_btn_id_b).click()

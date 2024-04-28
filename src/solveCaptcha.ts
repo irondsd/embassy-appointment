@@ -34,6 +34,8 @@ export const solveCaptcha = async (base64Img: string, page: Page) => {
 
     return result
   } catch (error) {
-    console.error(error)
+    const message = `Captcha API error: ${error?.message} | ${error?.response?.data?.message}`
+    console.log(message)
+    process.exit(1)
   }
 }
