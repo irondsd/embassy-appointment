@@ -7,7 +7,7 @@ END_TIME="00:01"
 
 # Function to run the program
 run_program() {
-    ./your_program_name
+    npm start | tee -a logfile
 }
 
 # Loop until the current time is outside the specified range
