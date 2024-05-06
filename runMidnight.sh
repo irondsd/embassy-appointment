@@ -14,11 +14,11 @@ run_program() {
 while true; do
     CURRENT_TIME=$(date +"%H:%M")
     if [[ "$CURRENT_TIME" < "$PREVIOUS_DAY_END_TIME" || "$CURRENT_TIME" > "$START_TIME" ]]; then
-        sleep 10
+        sleep 0.1
         continue
     fi
 
     # Run the program
     run_program
-    sleep 0.1
+    sleep 20
 done
